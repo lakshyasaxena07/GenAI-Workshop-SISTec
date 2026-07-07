@@ -1,0 +1,16 @@
+[
+    
+    {
+        "id":1,
+        "name":"Ali",
+        "course":"AI",
+        "marks":92
+    },
+    {
+        "id":2,
+        "name":"Sara",
+        "course":"Python",
+        "marks":88
+    }
+]
+
