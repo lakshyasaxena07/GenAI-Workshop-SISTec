@@ -1,19 +1,20 @@
-# 🧠 GenAI & Multi-Agent Systems Workshop (SISTec)
+# 🧠 GenAI, RAG & Autonomous Multi-Agent Workshop (SISTec)
 
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)
 [![LLM Provider](https://img.shields.io/badge/LLM-Groq-orange?logo=google-cloud)](https://groq.com/)
 [![Frameworks](https://img.shields.io/badge/Frameworks-LangChain%20%7C%20Pydantic%20%7C%20FAISS-green)](https://github.com/langchain-ai/langchain)
 
-Welcome to the official repository for the **GenAI and Multi-Agent Systems Workshop** at **SISTec** (Sagar Institute of Science and Technology). This repository is a comprehensive, hands-on guide designed for developers and AI engineers to transition from basic LLM integration to advanced concepts like custom agent run-loops, multi-agent orchestrations, native tool calling, and full-featured Retrieval-Augmented Generation (RAG) pipelines.
+Welcome to the official repository for the **GenAI, RAG, and Autonomous Multi-Agent Systems Workshop** at **SISTec** (Sagar Institute of Science and Technology). This project contains the complete codebase, data inputs, and conceptual presentations spanning from basic agent run-loops to production-grade Retrieval-Augmented Generation (RAG) and stateful autonomous workflow agent executors.
 
 ---
 
 ## 📅 Workshop Agenda Overview
 
-| Day | Topic | Key Technologies | Core Files & Demos |
+| Day | Topic | Key Technologies | Demos & Codebases |
 | :--- | :--- | :--- | :--- |
-| **Day 1** | **Custom Agents & Multi-Agent Routing** | Python, Groq LLM, Pydantic, OpenWeatherMap API | Custom Runner class, Weather Agent, Keyword-based Supervisor Router |
-| **Day 2** | **Native Tool Calling & LangChain RAG** | OpenAI SDK, LangChain, FAISS, Sentence Transformers, Browserbase | Groq Tool Calling, PDF/JSON/Web RAG loaders, API-driven Semantic Search |
+| **Day 1** | **Custom Agents & Supervisor Routing** | Python, Groq LLM, Pydantic, OpenWeatherMap API | Custom Runner class, Weather Agent, Keyword-based Supervisor Router |
+| **Day 2** | **Native Tool Calling & LangChain RAG** | OpenAI SDK, LangChain Loaders, FAISS, Sentence Transformers, Browserbase | Groq Native Tool Calling, TXT/PDF/JSON/Web RAG pipelines |
+| **Day 3** | **Autonomous Workflow Agents** | LangChain `AgentExecutor`, Matplotlib, Pandas, SMTP Email SSL | AI Financial Advisor (CSV to Chart), Advanced Calculator Agent, Google Drive CSV Sales Analyzer with Email Reporting |
 
 ---
 
@@ -35,25 +36,36 @@ Welcome to the official repository for the **GenAI and Multi-Agent Systems Works
 │       ├── tool.py                # Helper API tools
 │       ├── runner.py              # Central agent-execution engine
 │       └── main.py                # Multi-Agent supervisor routing orchestrator
-├── Day_2/
+├── Day_2_&_3/
+│   ├── Explaination_PPTXs/        # Conceptual lecture presentations
+│   │   ├── GenAI_LLM_LangChain_RAG_Agents.pptx
+│   │   ├── RAG_Scenarios_Components (1).pptx
+│   │   └── RAG_Scenarios_Components.pptx
 │   ├── GropToolCalling/
-│   │   ├── tool.py                # API implementation for weather querying
-│   │   ├── main.py                # Native function calling using Groq LLM and OpenAI SDK
+│   │   ├── tool.py                # OpenWeatherMap API tool definition
+│   │   ├── main.py                # Native function calling using Groq LLM & OpenAI SDK
 │   │   └── requirements.txt       # Dependencies for Tool Calling demo
 │   └── RAG/
-│       ├── data/                  # Source files for retrieval database
-│       │   ├── company.txt        # Corporate textual knowledge base
+│       ├── data/                  # Source files for RAG & Agent queries
+│       │   ├── bank_data.csv      # Dummy transactions dataset
+│       │   ├── company.txt        # Corporate text knowledge base
 │       │   ├── company_policy.pdf # PDF policy documentation
-│       │   └── sample.json        # Structured JSON data
-│       ├── Rag_ReadTxt.py         # RAG pipeline for Plain Text files
-│       ├── Rag_ReadPDF.py         # RAG pipeline for PDF documents
-│       ├── Rag_ReadJson.py        # RAG pipeline for JSON structures
-│       ├── Rag_ReadWebPage.py     # RAG pipeline for live URLs using Browserbase
-│       ├── rag_api.py             # Semantic user search using external JSON APIs
-│       ├── movie_recommendation.py# User post semantic matching engine
-│       └── requirements.txt       # Dependencies list (LangChain, FAISS, etc.)
-├── .gitignore                     # Git exclusion rules (venv, API keys)
-├── requirements.txt               # Main dependencies list
+│       │   ├── sample.csv         # Small CSV for general agent
+│       │   └── sample.json        # Structured sample JSON
+│       ├── 2_Rag_ReadTxt.py       # RAG pipeline for Plain Text files
+│       ├── 2_Rag_ReadPDF.py       # RAG pipeline for PDF documents
+│       ├── 2_Rag_ReadJson.py      # RAG pipeline for JSON structures
+│       ├── 2_Rag_ReadWebPage.py   # RAG pipeline for live URLs using Browserbase
+│       ├── 2_rag_api.py           # Semantic API user query system
+│       ├── 2_movie_recommendation.py # RAG matching over external post APIs
+│       ├── 3_AI_Financial_Advisor.py # Autonomous tool-calling financial assistant
+│       ├── 3_langchain_agent.py   # General math, date & CSV utility agent
+│       ├── 3_sales_Analyzer.py    # Downloads, analyzes sales data & emails plots
+│       ├── sales_data.csv         # Downloaded sales CSV
+│       ├── sales_chart.png        # Generated sales visual trend
+│       └── requirements.txt       # RAG & Day 3 dependencies (LangChain, FAISS, Pandas, etc.)
+├── .gitignore                     # Git exclusion rules (.venv, API keys, credentials)
+├── requirements.txt               # Day 1 main dependencies list
 └── README.md                      # Workshop Documentation (You are here)
 ```
 
@@ -62,7 +74,7 @@ Welcome to the official repository for the **GenAI and Multi-Agent Systems Works
 ## 🧠 Architectural Deep-Dives
 
 ### 🤖 Day 1: Multi-Agent Supervisor Routing Flow
-Rather than relying on heavy agent frameworks, Day 1 implements a **Custom Runner & Agent architecture** from scratch. A **Supervisor Router** parses queries and dynamically invokes the specialized agent matching the domain.
+Implements a lightweight **Custom Runner & Agent architecture** from scratch. A supervisor routes the prompt based on keyword parsing to either the Weather or Coding agent.
 
 ```mermaid
 graph TD
@@ -80,12 +92,12 @@ graph TD
 ```
 
 ### 📚 Day 2: Retrieval-Augmented Generation (RAG) Architecture
-Day 2 explores **RAG systems** using LangChain and FAISS, enabling LLMs to answer domain-specific questions by querying locally vectorized documents.
+Loads and parses files (PDF, JSON, TXT, Web URLs) into structured chunks, embeds them via `sentence-transformers/all-MiniLM-L6-v2`, and retrieves relevant context through FAISS.
 
 ```mermaid
 graph TD
     DocSource[Source Document<br>PDF, TXT, JSON, Web] --> Loader[LangChain Document Loader]
-    Loader --> Splitter[Recursive Character Text Splitter<br>Chunk Size: 1000/500, Overlap: 200/50]
+    Loader --> Splitter[Recursive Character Text Splitter<br>Chunk Size: 1000, Overlap: 200]
     Splitter --> Embedder[HuggingFace Embeddings<br>all-MiniLM-L6-v2]
     Embedder --> VectorDB[(FAISS Vector Store)]
     
@@ -94,6 +106,24 @@ graph TD
     VectorDB -- "Retrieve top K chunks" --> QAChain
     QAChain --> GroqLLM[ChatGroq LLM<br>llama-3.3-70b-versatile]
     GroqLLM --> FinalAnswer[Context-Aware Answer]
+```
+
+### ⚙️ Day 3: Autonomous Workflow Agent Loop (LangChain create_tool_calling_agent)
+Features goal-driven executors (`AgentExecutor`) that execute loops to select and apply python tools sequentially until the target is resolved.
+
+```mermaid
+graph LR
+    UserRequest([User Goal]) --> Executor[LangChain AgentExecutor]
+    Executor --> LLM[ChatGroq Llama-3]
+    LLM -- "Decide tool call" --> Executor
+    Executor --> Tools{Tools List}
+    Tools -- "Download File" --> Download[Google Drive API]
+    Tools -- "Calculate Saving" --> Pandas[Pandas & Matplotlib]
+    Tools -- "Report Results" --> SMTP[Gmail SMTP SSL]
+    Download --> Executor
+    Pandas --> Executor
+    SMTP --> Executor
+    Executor -- "Final Answer" --> Output([User Response])
 ```
 
 ---
@@ -123,28 +153,31 @@ source .venv/bin/activate
 ```
 
 ### 3. Install Dependencies
-This project uses two separate environments depending on the modules you wish to run:
+This project uses separate requirements files depending on the day's curriculum:
 
-#### Option A: Day 1 & Day 2 Tool Calling Core
+#### Day 1 & Day 2 Tool Calling Core
 ```bash
 pip install -r requirements.txt
 ```
 
-#### Option B: Day 2 RAG Environment (LangChain, HuggingFace, FAISS)
+#### Day 2 & 3 RAG and Autonomous Agent Environment
+Installs LangChain, FAISS Vector Store, Matplotlib, Pandas, HuggingFace embeddings, and extra dependencies:
 ```bash
-pip install -r Day_2/RAG/requirements.txt
+pip install -r Day_2_&_3/RAG/requirements.txt
 ```
 
 ### 4. Setup Environment Variables
-Create a `.env` file in the root directory (and/or inside `Day_1` and `Day_2` as needed) with the following variables:
+Create a `.env` file in the root directory (or inside `Day_1` and `Day_2_&_3/RAG` as needed) with the following variables:
 ```env
 GROQ_API_KEY=your_groq_api_key_here
 weather_api_key=your_openweathermap_api_key_here
+EMAIL_USER=your_gmail_address_here
+EMAIL_PASSWORD=your_gmail_app_password_here
 ```
 > [!IMPORTANT]
-> - Obtain your Groq API key from the [Groq Console](https://console.groq.com/).
-> - Obtain your weather API key from the [OpenWeatherMap Portal](https://openweathermap.org/api).
-> - Never commit your `.env` file to version control. The `.gitignore` file is already preconfigured to exclude it.
+> - **Groq Key**: Obtain from the [Groq Console](https://console.groq.com/).
+> - **Weather Key**: Obtain from the [OpenWeatherMap Portal](https://openweathermap.org/api).
+> - **SMTP Mail**: If utilizing the email reporting tool, ensure `EMAIL_USER` is your Gmail address and `EMAIL_PASSWORD` is an active Gmail App Password (not your primary password). Keep security high by not committing `.env`!
 
 ---
 
@@ -153,65 +186,82 @@ weather_api_key=your_openweathermap_api_key_here
 ### 🌤️ Day 1: Custom Agents & Routers
 
 #### Single Agent (Weather Agent)
-Run a custom-built agent that fetches weather data using raw API tools and formats it using strict Pydantic parsing:
 ```bash
 python Day_1/Weather_agent/main.py
 ```
 
 #### Multi-Agent Supervisor Router
-Run a keyword-based multi-agent system that delegates to either the Weather or Coding agent:
 ```bash
 python Day_1/Multi_Agent/main.py
 ```
 
 ---
 
-### 🛠️ Day 2: Native Tool Calling & RAG
+### 🛠️ Day 2: Native Tool Calling & RAG Pipelines
 
 #### Native Groq Tool Calling
-Demonstrates how to use the official OpenAI SDK structure with Groq’s high-speed inference engine (`llama-3.3-70b-versatile`) to perform function calling:
 ```bash
-python Day_2/GropToolCalling/main.py
+python Day_2_&_3/GropToolCalling/main.py
 ```
 
-#### Document RAG Pipelines
-Run these scripts to query knowledge stored across various document formats:
+#### RAG Document Loaders
 ```bash
-# Query from a raw Text file
-python Day_2/RAG/Rag_ReadTxt.py
+# Plain Text RAG
+python Day_2_&_3/RAG/2_Rag_ReadTxt.py
 
-# Query from a PDF manual
-python Day_2/RAG/Rag_ReadPDF.py
+# PDF Document RAG
+python Day_2_&_3/RAG/2_Rag_ReadPDF.py
 
-# Query from structured JSON data
-python Day_2/RAG/Rag_ReadJson.py
+# JSON Structure RAG
+python Day_2_&_3/RAG/2_Rag_ReadJson.py
 
-# Query live from a Webpage
-python Day_2/RAG/Rag_ReadWebPage.py
+# Webpage scraping URL RAG
+python Day_2_&_3/RAG/2_Rag_ReadWebPage.py
 ```
 
-#### API-driven Semantic Engines
-Execute semantic recommendation search on mock APIs:
+#### RAG over External API Mock Data
 ```bash
-# RAG over external Users JSON API
-python Day_2/RAG/rag_api.py
+# RAG querying JSONPlaceholder Users list
+python Day_2_&_3/RAG/2_rag_api.py
 
-# RAG over external Posts/Movies JSON API
-python Day_2/RAG/movie_recommendation.py
+# RAG recommendation querying DummyJSON posts list
+python Day_2_&_3/RAG/2_movie_recommendation.py
+```
+
+---
+
+### ⚙️ Day 3: Autonomous Workflow Agents (LangChain AgentExecutor)
+
+#### 💵 AI Financial Advisor
+An autonomous advisor agent that parses a credit/debit transaction log, plots category breakdowns, suggests savings corrections, and exports a text report.
+```bash
+python Day_2_&_3/RAG/3_AI_Financial_Advisor.py
+```
+
+#### 🧮 General LangChain Tool Agent
+A simple utility agent resolving equations, calculating live times, and reading column averages of csv logs.
+```bash
+python Day_2_&_3/RAG/3_langchain_agent.py
+```
+
+#### 📊 Sales Trend & Email reporter
+Downloads a CSV dataset from a Google Drive URL, analyzes standard deviations/averages, saves a visual line trend chart (`sales_chart.png`), and pushes the chart via Gmail SMTP SSL to the target email.
+```bash
+python Day_2_&_3/RAG/3_sales_Analyzer.py
 ```
 
 ---
 
 ## 💡 Best Practices for GenAI Engineering
 
-1. **Deterministic Structured Parsing**: Always use validation libraries like `Pydantic` to parse JSON from LLMs when output structure is critical for downstream systems.
-2. **Chunk Overlap**: When setting up a vector search pipeline, maintain a moderate chunk overlap (e.g., 10-20% of chunk size) to prevent contextual loss at boundaries.
-3. **API Rate Limiting**: Groq offers high throughput, but you should handle rate limit exceptions gracefully in production settings.
-4. **Environment Isolation**: Separate package environments if there are conflicting dependency requirements between lightweight agents and heavyweight embedding models.
+1. **Structured Parser Guardrails**: Use `Pydantic` validation or native function schemas with LLMs when output structure is critical for downstream API integrations.
+2. **Context Compression & Chunks**: Keep chunk overlap at roughly 10-20% of your total chunk size to preserve semantic relationships across boundaries.
+3. **Agent Loop Loop-Protection**: When using `AgentExecutor`, set standard iteration limits (`max_iterations`) to prevent infinite tool calling loops when LLMs face failed tool results.
+4. **App Password Encryption**: Never place raw emails or plain SMTP credentials inside project source code; keep them isolated strictly inside your locally excluded `.env` file.
 
 ---
 
 ## 🤝 Contributing
-Contributions, suggestions, and feedback are always welcome! Feel free to raise issues or create pull requests.
+Contributions, suggestions, and feedback are welcome! Feel free to raise issues or open pull requests.
 
 Developed during the **SISTec GenAI Workshop**. Made with ❤️ and 🤖.
