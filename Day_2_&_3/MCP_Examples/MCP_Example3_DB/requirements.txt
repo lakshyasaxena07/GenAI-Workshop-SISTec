@@ -1,0 +1,7 @@
+mcp
+mysql-connector-python
+langgraph
+langchain-groq
+langchain-mcp-adapters
+python-dotenv
+langchain
